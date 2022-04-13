@@ -7,29 +7,32 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TwitterClone_MVC.Models
 {
+    [Table("User")]
     public class User
     {
 
         public int ID { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "Last Name")]
-        public string LastName { get; set; }
-
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "*FirstName is required")]
+        [StringLength(50, MinimumLength = 3)]
         [Column("FirtName")]
         [Display(Name = "First Name")]
         public string FirstMidName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*LastName is required")]
+        [StringLength(50, MinimumLength = 3)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [StringLength(50, MinimumLength = 3)]
+        [DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage = "*Email is required")]
         [Column("Email")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [StringLength(6)]
+        [Required(ErrorMessage = "*Password is required")]
+        [StringLength(50, MinimumLength = 3)]
         [Column("Password")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -41,16 +44,15 @@ namespace TwitterClone_MVC.Models
             get
             {
 
-                return LastName + ", " + FirstMidName;
+                return FirstMidName + " " + LastName;
             }
         }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Enrollment Date")]
-        public DateTime EnrollmentDate { get; set;}
+        public ICollection<Tweet> Tweets { get; set;}
+        public ICollection<Like> Likes { get; set; }
 
-        public ICollection<Follow> Following { get; set;}
+        public ICollection<Follow> Follows { get; set; }
 
+        public ICollection<Comment> Comments { get; set; }
     }
 }

@@ -1,8 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+@{
+    
+    ViewData["Title"] = "Sign In Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<br/>
+<div class="row align-items-center">
+    <div class="col-sm-8 text-center">
+        <img class="img-thumbnail text-center border-0" src="~/img/img_home.png" />
+    </div>
+    <div class="col-sm-4 p-4 align-middle shadow custom_radius">
+        <div class="bg-white  p-4 ">
+            <form action="/" method="post">
+                <div class="mb-3">
+                    @Html.TextBox("Email", null, new { @class = "form-control w-100", placeholder = "Email" })
+                </div>
+                <br />
+                <div class="mb-3">
+                    @Html.Password("Password", null, new { @class = "form-control w-100", placeholder = "Password" })
+                </div>
+                <p class="text-danger m-auto w-75">@ViewBag.message</p>
+                <br />
+                <div class="text-center p-2">
+                    <input type="submit" value="Login" class="btn btn-primary w-100" formaction="/Home/Index" />
+                    <br />
+                    <p class="m-2"><a href="#WeAreWorkingOnThis:)">Forgot Password?</a></p>
+                </div>
+                <hr />
+                <div class="text-center p-2">
+                    @Html.ActionLink("Create New Account", "Create", "users", null, new { @class = "btn btn-primary w-75 bg-success text-decoration-none" })
+                </div>
+            </form>
+
+        </div>
+    </div>
 </div>

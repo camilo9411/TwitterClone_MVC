@@ -1,0 +1,65 @@
+﻿@model IEnumerable<TwitterClone_MVC.Models.Tweet>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextaccessor
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    int currentUserID = Int32.Parse(httpContextaccessor.HttpContext.Request.Cookies["ID"]);
+        
+}
+
+<h2>My Feed</h2>
+
+<hr/>
+<div>
+@foreach (var item in Model) {
+            
+    <div class="p-3 w-75 mx-auto border border-primary rounded shadow mb-3 bg-light">
+        <div class="row m-0">
+            <div class="col-2 text-center align-middle" >
+                <img src="~/img/img_person.png" height="60px" width="60px" class="rounded-circle border border-primary p-1" />
+            </div>
+            <div class = "col-10 text-start align-middle">
+                <p class="mb-0 pb-0"><b>@item.User.Fullname</b></p>
+                <p class="mb-0 pt-0 emailTweet"><i>@item.User.Email</i></p>
+            </div>
+            <div class="col-2" ></div>
+            <div class="col-10 text-start align-middle" >
+                 <p class="mb-0 py-3">@item.Message</p>
+            </div>
+            
+        </div>
+        <p class="text-end mb-0 dateTweet">@item.CreatedOn</p>
+        <hr class="text-primary font-weight-bold"/>
+            @{
+                var parms = new Dictionary<string, string>
+                        {
+                            { "TweetID", item.ID.ToString() },
+                            { "UserID", currentUserID.ToString() }
+                        };
+
+                string pathImg = "";
+
+                if (item.Likes.FirstOrDefault<Like>(l => l.UserID == currentUserID && l.TweetID == item.ID) != null)
+                {
+                    pathImg = "/img/like-solid.png";
+                }
+                else
+                {
+                    pathImg = "/img/like.png";
+                }
+            }
+
+        <div class="text-center m-0 w-50 mx-auto">
+            @item.Likes.Count <a class="mb-0 p-1" style="text-decoration:none;" asp-action="Create" asp-controller="Likes" asp-all-route-data = "parms">
+                <img class="likeImage" alt="" src="@pathImg"/></a>
+            &emsp; &emsp;@item.Comments.Count<a class="mb-0 p-1" style="text-decoration:none;">
+	        <img class="likeImage" alt="" src="~/img/reply.png"/></a>
+        </div>
+
+    </div>    
+}
+  
+</div>
