@@ -19,40 +19,6 @@ namespace TwitterClone_MVC.Controllers
             _context = context;
         }
 
-        // GET: Likes
-        public async Task<IActionResult> Index()
-        {
-            var twitterContext = _context.Likes.Include(l => l.Tweet).Include(l => l.User);
-            return View(await twitterContext.ToListAsync());
-        }
-
-        // GET: Likes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var like = await _context.Likes
-                .Include(l => l.Tweet)
-                .Include(l => l.User)
-                .FirstOrDefaultAsync(m => m.TweetID == id);
-            if (like == null)
-            {
-                return NotFound();
-            }
-
-            return View(like);
-        }
-
-        // GET: Likes/Create
-        public IActionResult Create()
-        {
-            ViewData["TweetID"] = new SelectList(_context.Tweets, "ID", "Message");
-            ViewData["UserID"] = new SelectList(_context.Users, "ID", "Email");
-            return View();
-        }
 
         [HttpGet]
         public async Task<IActionResult> Create([Bind("TweetID,UserID")] Like like)

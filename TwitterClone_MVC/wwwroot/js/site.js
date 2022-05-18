@@ -3,7 +3,22 @@
 
 // Write your JavaScript code.
 
-function changeImage() {
-    document.getElementById("myImg").src = "~/img/like-solid.png";
+
+var listCliked = [];
+
+
+function displayComments(tweet) {
+
+    var comment = document.getElementById("Tweet_" + tweet);
+
+    if (listCliked.includes(tweet)) {
+        comment.classList.add("d-none");
+        listCliked.pop(tweet);
+    } else {
+
+        comment.classList.remove("d-none");
+        listCliked.push(tweet);
+    }
+
 }
 

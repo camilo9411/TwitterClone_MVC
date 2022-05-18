@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TwitterClone_MVC.Migrations
 {
-    public partial class TwitterContextMigration : Migration
+    public partial class TwitterCloneContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,13 +66,15 @@ namespace TwitterClone_MVC.Migrations
                 name: "Comment",
                 columns: table => new
                 {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TweetID = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Comment", x => new { x.TweetID, x.UserID });
+                    table.PrimaryKey("PK_Comment", x => x.ID);
                     table.ForeignKey(
                         name: "FK_Comment_Tweet_TweetID",
                         column: x => x.TweetID,
@@ -108,6 +110,11 @@ namespace TwitterClone_MVC.Migrations
                         principalTable: "User",
                         principalColumn: "ID");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_TweetID",
+                table: "Comment",
+                column: "TweetID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comment_UserID",

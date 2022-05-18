@@ -10,29 +10,36 @@ using TwitterClone_MVC.Data;
 namespace TwitterClone_MVC.Migrations
 {
     [DbContext(typeof(TwitterContext))]
-    [Migration("20220411204814_TwitterContextMigration")]
-    partial class TwitterContextMigration
+    [Migration("20220419215204_TwitterCloneContext")]
+    partial class TwitterCloneContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.15")
+                .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TwitterClone_MVC.Models.Comment", b =>
                 {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("TweetID")
                         .HasColumnType("int");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("ID");
 
-                    b.HasKey("TweetID", "UserID");
+                    b.HasIndex("TweetID");
 
                     b.HasIndex("UserID");
 

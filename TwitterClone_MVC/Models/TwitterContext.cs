@@ -15,18 +15,16 @@ namespace TwitterClone_MVC.Data
         public DbSet<Tweet> Tweets { get; set; }
         public DbSet<Like> Likes { get; set; }
 
-
-
+        public DbSet<Follow> Follow { get; set; }
+        public DbSet<Comment> Comment { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Like>()
                 .HasKey(t => new { t.TweetID, t.UserID });
 
-            modelBuilder.Entity<Comment>()
-                .HasKey(t => new { t.TweetID, t.UserID });
 
-            modelBuilder.Entity<Comment>().HasOne(u => u.User)
+            modelBuilder.Entity<Comment>().HasOne(c => c.User)
                 .WithMany(l => l.Comments)
                 .OnDelete(DeleteBehavior.NoAction);
 
@@ -48,12 +46,7 @@ namespace TwitterClone_MVC.Data
 
 
 
-        public DbSet<TwitterClone_MVC.Models.Follow> Follow { get; set; }
 
-
-
-
-        public DbSet<TwitterClone_MVC.Models.Comment> Comment { get; set; }
 
 
 

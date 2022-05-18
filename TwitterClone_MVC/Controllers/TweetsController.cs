@@ -35,6 +35,7 @@ namespace TwitterClone_MVC.Controllers
             var user = await _context.Users
                 .Include(t=> t.Tweets)
                 .Include(t => t.Follows)
+                .Include(t => t.Comments)
                 .FirstOrDefaultAsync(m => m.ID == Int32.Parse(Request.Cookies["ID"]));
 
             var followingIDss = _context.Follow
@@ -58,6 +59,15 @@ namespace TwitterClone_MVC.Controllers
             myFeed = followingTweets.ToList<Tweet>();
 
             List<Tweet> SortedList = myFeed.OrderByDescending(t => t.CreatedOn).ToList();
+            Dictionary<int, string> fullNames = new Dictionary<int, string>();
+
+            foreach (User u in _context.Users) {
+            
+                fullNames.Add(u.ID, u.Fullname);
+            }
+
+            ViewBag.fullNames = fullNames;
+
 
             return View(SortedList);
         }
