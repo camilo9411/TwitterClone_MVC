@@ -69,3 +69,37 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.custom_radius {
+
+    border-radius: 10px;
+
+}
+
+.twitterColor {
+
+    background-color: #1DA1F2;
+}
+
+.custom_weight:hover {
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+.likeImage {
+    width: 20px;
+    height: 20px;
+}
+
+.dateTweet {
+    color: gray;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.emailTweet {
+    color: gray;
+    font-size:0.8em;
+    font-weight: bold;
+    font-style: italic;
+}

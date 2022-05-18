@@ -19,31 +19,23 @@ namespace TwitterClone_MVC.Models
                 }
 
                 var users = new User[]
-                {
-                    new User{FirstMidName="Carson",LastName="Alexander",Password = "123456", Email = "carson@me.com",EnrollmentDate=DateTime.Parse("2000-09-01")},
-                    new User{FirstMidName="Camilo",LastName="Restrepo",Password = "123456", Email = "camilo@me.com",EnrollmentDate=DateTime.Parse("2002-09-01")},
-                    new User{FirstMidName="Andres",LastName="Ardila",Password = "123456", Email = "andres@me.com",EnrollmentDate=DateTime.Parse("2003-09-01")},
+                    {
+                        new User{FirstMidName = "Carson", LastName = "Alexander", Password = "carson", Email = "carson@me.com" },
+                        new User{FirstMidName="Camilo",LastName="Restrepo",Password = "camilo", Email = "camilo@me.com"},
+                        new User{FirstMidName="Andres",LastName="Ardila",Password = "andres", Email = "andres@me.com"}
 
-                };
+                    };
+
                 foreach (User u in users)
                 {
                     context.Users.Add(u);
                 }
                 context.SaveChanges();
 
-                var follows = new Follow[]
-                {
-                        new Follow{UserID = 1, FollowingID = 2},
-                        new Follow{UserID = 2, FollowingID = 3},
+        }
 
-                 };
-                foreach (Follow f in follows)
-                {
-                    context.Follows.Add(f);
-                }
-                context.SaveChanges();
-        }
-        }
+
+    }
 
 
 }

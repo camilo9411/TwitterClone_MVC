@@ -1,0 +1,74 @@
+﻿@model IEnumerable<TwitterClone_MVC.Models.User>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextaccessor
+
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+@{
+    int currentUserID = Int32.Parse(httpContextaccessor.HttpContext.Request.Cookies["ID"]);
+}
+<h2>Users </h2>
+<hr/>
+<table class="table w-75 mx-auto">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Fullname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+
+            if (item.ID != currentUserID)
+            {
+                
+
+                    string btnClass = "", labelName= "";
+
+                    var follow = item.Follows.FirstOrDefault(f => f.UserID == currentUserID);
+
+                    if ( follow == null)
+                    {
+                        btnClass = "btn-success";
+                        labelName = "Follow";
+                    }
+                    else
+                    {
+                        btnClass = "btn-danger";
+                        labelName = "Unfollow";
+                    }
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fullname)
+                
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                @{
+                    var parms = new Dictionary<string, string>
+                            {
+                                {"UserID", currentUserID.ToString()},
+                                {"FollowingID", item.ID.ToString()}
+                            };
+                }
+                <td>
+                    <a class="@btnClass btn w-75" asp-action="Create" asp-controller="Follows" asp-all-route-data="parms">@labelName</a>
+                </td>
+            </tr>
+
+
+            }
+            
+}
+    </tbody>
+</table>
